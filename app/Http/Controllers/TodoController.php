@@ -95,4 +95,35 @@ $password = $request->password;
         return redirect()->route('listtodo')->with('success','Tache crée avec success');
         
     }
+
+    public function updateTask($id){
+
+        $task = Task::find($id);
+
+        return view('updateTask',compact('task'));
+    }
+
+    public function updateTaskAll(Request $request, $id){
+
+     
+
+        $taskId = Task::find($id);
+
+        $taskId->update([
+            'name'=> $request->titre,
+            'description'=>$request->description,
+            'user_id'=>Auth::user()->id
+        ]);
+        return redirect()->route('listtodo')->with('success','Donnée(s) modifiée(s) avec success...');
+    }
+
+    public function deleteTask($id){
+
+     
+
+        $taskId = Task::find($id);
+
+        $taskId->delete();
+        return redirect()->route('listtodo')->with('success','Donnée(s) supprimée(s) avec success...');
+    }
 }

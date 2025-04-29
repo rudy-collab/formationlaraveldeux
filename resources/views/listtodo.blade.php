@@ -30,12 +30,38 @@
             <th scope="row">{{ $listtodo->id }}</th>
             <td>{{ $listtodo->name }}</td>
             <td>{{ $listtodo->description }}</td>
-            <td><a href="">
+            <td><a href="{{ route('updateTask',['id'=>$listtodo->id]) }}">
                 <button class='btn btn-info btn-sm'>Modifier</button>
             </a></td>
-            <td><a href="">
-                <button class='btn btn-danger btn-sm'>Supprimer</button>
-            </a></td>
+            <td>
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModaldelete">
+   Delete
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModaldelete" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Voulez-vous suprimmer ces données ?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body center">
+            <form class='mx-2' action="{{ route('deleteTask',['id'=>$listtodo->id]) }}" method='post'>
+                @csrf 
+                @method('delete')
+                <button  class='btn btn-success '>Oui</button>
+            </form>
+            <button class='btn btn-danger mx-2' data-bs-dismiss="modal">Non</button>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+               
+               
+            </td>
 
           </tr>
         @endforeach
@@ -88,6 +114,7 @@
                 <label for="exampleFormControlTextarea1" class="form-label">Description</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name='description'></textarea>
               </div>
+           
               <div class='center'>
                 <button type='submit' class='btn btn-dark'>Soumettre</button>
               </div>
