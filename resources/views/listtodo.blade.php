@@ -6,13 +6,16 @@
 <div class='center mt-5'>
     <div>
         <img src="{{ asset('empty.png') }}" alt="Description de l'image" width="200" height="200">
-        <p class='text-center'>Aucune donnees...</p>
+        <p class='text-center'>Aucune(s) tache(s) enregistrée(s)...</p>
     </div>
   
 </div>
 
 @elseif (count($listTodo) > 0)
-<h2 class='text-center mt-5'>Tableau des taches</h2>
+<div class='center mt-3 mb-3'>
+  <img src="{{ asset('add.png') }}" alt="" width="200">
+</div>
+<h2 class='text-center mt-5'>Ajouter des taches</h2>
 <table class="container table table-striped mt-5 shadow">
     <thead>
       <tr>
@@ -68,10 +71,12 @@
     
     </tbody>
   </table>
-    
+    <div class='center'>
+  {{ $listTodo->links() }}
+    </div>
   @if (session('success'))
   <div class='center'>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show animate__animated animate__bounceInLeft " role="alert">
     {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
@@ -80,7 +85,7 @@
   @endif
   @if (session('error'))
   <div class='center'>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show animate__animated animate__bounceInLeft " role="alert">
     {{ session('error') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
@@ -90,7 +95,7 @@
 @endif
 <div class='center mt-5'>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-dark  animate__animated animate__headShake animate__infinite infinite" data-bs-toggle="modal" data-bs-target="#exampleModal">
    Creez votre Tache...
   </button>
   

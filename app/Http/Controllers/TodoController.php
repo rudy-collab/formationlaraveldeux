@@ -36,35 +36,30 @@ class TodoController extends Controller
             'email'=>$request->email,
             'password'=> Hash::make($request->password)
         ]);
-
-        return redirect()->route('index')->with('success','Utilisateur crée avec success...');
+        $credentials = $request->validated();
+        if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+            return redirect()->route('index');
+           }else{
+            return redirect()->route('register')->with('error','Donnees invalides');
+           }
     }
 
     public function logins(){
-
-      
 
         return view('logins');
     }
 
     public function loginAll(LoginLogin $request){
 
-        $validate = $request->validate([
-            'email'=>['required','email'],
-            'password'=>['required']
-        ]);
 
 $credentials = $request->validated();
-$email = $request->email;
-$password = $request->password;
 
-
-       
        if(Auth::attempt($credentials)){
         $request->session()->regenerate();
         return redirect()->route('index');
        }else{
-        return redirect()->route('logins')->with('error','Donnees invalides');
+        return redirect()->route('register')->with('error','Donnees invalides');
        }
      
        
@@ -79,7 +74,7 @@ $password = $request->password;
 
     public function listtodo(){
 
-        $listTodo = Task::where('user_id',Auth::user()->id)->get();
+        $listTodo = Task::where('user_id',Auth::user()->id)->orderBy('id','desc')->paginate(2);
 
         return view('listtodo', compact('listTodo'));
     }
